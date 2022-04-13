@@ -109,26 +109,34 @@ function App() {
 
     return (
         <div className="App">
-            {error && <p className="error">{error}</p>}
-            <h2>{balance / 10 ** 18} eth</h2>
-            <div className="wallet__flex">
-                <div className="walletG">
-                    <h3>Envoyer de l'ether</h3>
-                    <input
-                        type="text"
-                        placeholder="Montant en Ethers"
-                        onChange={changeAmountSend}
-                    />
-                    <button onClick={transfer}>Envoyer</button>
+            <div className="container">
+                <div className="logo">
+                    <i className="fa-brands fa-ethereum"></i>
                 </div>
-                <div className="walletD">
-                    <h3>Retirer de l'ether</h3>
-                    <input
-                        type="text"
-                        placeholder="Montant en Ethers"
-                        onChange={changeAmountWithdraw}
-                    />
-                    <button onClick={withdraw}>Retirer</button>
+                {error && <p className="error">{error}</p>}
+                {success && <p className="success">{success}</p>}
+                <h2>
+                    {balance / 10 ** 18} <span className="eth">eth</span>
+                </h2>
+                <div className="wallet__flex">
+                    <div className="walletG">
+                        <h3>Envoyer de l'ether</h3>
+                        <input
+                            type="text"
+                            placeholder="Montant en Ethers"
+                            onChange={changeAmountSend}
+                        />
+                        <button onClick={transfer}>Envoyer</button>
+                    </div>
+                    <div className="walletD">
+                        <h3>Retirer de l'ether</h3>
+                        <input
+                            type="text"
+                            placeholder="Montant en Ethers"
+                            onChange={changeAmountWithdraw}
+                        />
+                        <button onClick={withdraw}>Retirer</button>
+                    </div>
                 </div>
             </div>
         </div>
