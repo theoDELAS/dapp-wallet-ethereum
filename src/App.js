@@ -9,6 +9,7 @@ const walletAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 function App() {
     const [balance, setBalance] = useState(0);
     const [amountSend, setAmountSend] = useState();
+    const [accountAddress, setAccountAddress] = useState();
     const [amountWithdraw, setAmountWithdraw] = useState();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -42,7 +43,7 @@ function App() {
     }
 
     async function transfer() {
-        if (!amountSend) {
+        if (!amountSend || parseInt(amountSend) === 0) {
             return;
         }
         setError("");
@@ -73,7 +74,7 @@ function App() {
     }
 
     async function withdraw() {
-        if (!amountWithdraw) {
+        if (!amountWithdraw || parseInt(amountSend) === 0) {
             return;
         }
         setError("");
@@ -84,10 +85,14 @@ function App() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(walletAddress, Wallet.abi, signer);
+        const address =
+            typeof accountAddress === "undefined"
+                ? accounts[0]
+                : accountAddress;
 
         try {
             const transaction = await contract.withdraw(
-                accounts[0],
+                address,
                 ethers.utils.parseEther(amountWithdraw)
             );
             await transaction.wait();
@@ -107,6 +112,10 @@ function App() {
         setAmountWithdraw(amount.target.value);
     }
 
+    function changeAccountAddress(address) {
+        setAccountAddress(address.target.value);
+    }
+
     return (
         <div className="App">
             <div className="container">
@@ -120,20 +129,27 @@ function App() {
                 </h2>
                 <div className="wallet__flex">
                     <div className="walletG">
-                        <h3>Envoyer de l'ether</h3>
+                        <h3>Stack</h3>
                         <input
-                            type="text"
+                            type="number"
                             placeholder="Montant en Ethers"
                             onChange={changeAmountSend}
                         />
                         <button onClick={transfer}>Envoyer</button>
                     </div>
                     <div className="walletD">
-                        <h3>Retirer de l'ether</h3>
+                        <h3>Withdraw</h3>
                         <input
-                            type="text"
+                            className="withdrawAmount"
+                            type="number"
                             placeholder="Montant en Ethers"
                             onChange={changeAmountWithdraw}
+                        />
+                        <input
+                            className="withdrawAddress"
+                            type="text"
+                            placeholder="Adresse"
+                            onChange={changeAccountAddress}
                         />
                         <button onClick={withdraw}>Retirer</button>
                     </div>
