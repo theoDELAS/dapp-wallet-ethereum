@@ -64,22 +64,30 @@ h3 {
 
 .wallet__flex {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 3rem;
 }
 
-.walletG .walletD {
-    width: 50%;
+.walletG,
+.walletD {
+    flex: 1;
+}
+
+.walletG {
+    border-right: 1px solid #d1d5de;
 }
 
 input {
     border: 0;
     height: 2rem;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+input:not(.sendAmount) {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 button {
@@ -92,6 +100,25 @@ button {
     cursor: pointer;
     background: #d1d5de;
     color: #393e45;
+}
+
+.sendAmount {
+    border-radius: 5px;
+}
+
+.sendLogo {
+    align-items: center;
+    color: #fff;
+    margin: 1rem 0;
+}
+
+.staking,
+.sendContainer {
+    margin-top: 2rem;
+}
+
+.staking {
+    margin-bottom: 2rem;
 }
 
 .error,
